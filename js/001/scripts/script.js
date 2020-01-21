@@ -38,7 +38,7 @@ var anyo = new Date();
 console.log(anyo);
 */
 
-
+/*
 var diaNac = prompt("Ingrese su dia exacta de nacimiento");
 var mesNac = prompt("Ingrese su mes exacta de nacimiento");
 var anioNac = prompt("Ingrese su anio exacta de nacimiento");
@@ -60,3 +60,40 @@ function calculoEdadExacta(diaNac, mesNac, anioNac, diaActual, mesActual, anioAc
 }
 
 calculoEdadExacta(diaNac, mesNac, anioNac, diaActual, mesActual, anioActual);
+*/
+
+
+
+
+var diaNac = prompt("Ingrese su dia exacta de nacimiento");
+var mesNac = prompt("Ingrese su mes exacta de nacimiento");
+var anioNac = prompt("Ingrese su anio exacta de nacimiento");
+
+
+function calculoEdad (diaNac, mesNac, anioNac)
+{
+    var fecha = new Date();
+    var diaHoy =  fecha.getDate();
+    var mesHoy = fecha.getMonth() + 1;
+    var anioHoy = fecha.getFullYear();
+    
+    var edad = 2020-anioNac -1;
+
+    if ((mesHoy - mesNac) > 0)
+    {
+        edad += 1;
+    }
+
+    if ((mesHoy - mesNac) == 0)
+    {
+        if((diaHoy - diaNac) > 0)
+        {
+            edad +=1;
+        }
+    }
+    return edad;
+}
+
+var resultado = calculoEdad(diaNac, mesNac, anioNac);
+
+console.log("La edad de la persona ingresada es: ", resultado);
