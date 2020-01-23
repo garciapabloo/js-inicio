@@ -1,0 +1,22 @@
+body {
+    padding-left: 20em;
+    font-family: Georgia, "Times New Roman",
+          Times, serif;
+    color: rgb(105, 128, 0);
+    background-color: whitesmoke}
+
+  h3 {
+    font-family: Helvetica, Geneva, Arial,
+          SunSans-Regular, sans-serif }
+
+    .subtitulos
+    {
+        text-align: justify;
+        color: black;
+        text-decoration: underline;
+    }
+
+    .nav
+    {
+        list-style:none;
+    }
