@@ -243,7 +243,7 @@ function actualizarLimiteEnPantalla() {
 }
 
 
-
+///APERTURA PARA USO DE JSON 
 
 async function readJson() {
     try {
@@ -267,3 +267,32 @@ readJson().then(
         console.log(e)
     }
 )
+
+
+
+/*
+document.querySelector('#nombre').addEventListener('read', function() {
+    obtenerDatos();
+})
+
+function obtenerDatos() {
+
+const xhttp = new XMLHttpRequest();
+
+xhttp.open('GET', 'data/cuentas.json', true);
+
+xhttp.send();
+
+xhttp.onreadystatechange = function () {
+    
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(usuarios);        
+    }
+    else
+    {
+        console.log("no se encuentra el archivo json");
+    }
+}
+}
+
+*/
