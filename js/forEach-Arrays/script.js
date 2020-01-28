@@ -102,3 +102,5 @@ var newArrayFilter = miArreglitoEJ.filter(miArreglitoEJ => miArreglitoEJ<15);
 var reducer = (accumulator, miArreglitoEJ) => accumulator + miArreglitoEJ;
 
 miArreglitoEJ.reduce(reducer);
+
+/// reducer no funciona.
