@@ -1,39 +1,18 @@
 //Declaración de variables
-var usuarios = [
-    {
-        nombre: "Pablo",
-        codigoDeSeguridad: 1234
-    },
-    {
-        nombre: "Pepe",
-        codigoDeSeguridad: 4321
-    },
-    {
-        nombre: "Carlos",
-        codigoDeSeguridad: 1357
-    }
-]
+
+//USUARIOS Y CUENTAS RECUPERADAS DESDE EL LOCAL STORAGE, EL CUAL LAS SACO DEL JSON.
+var usuariosRemotos = localStorage.getItem('usuarios');
+usuariosRemotos = JSON.parse(usuariosRemotos);
+
+var serviciosRemotos = localStorage.getItem('servicios');
+serviciosRemotos = JSON.parse(serviciosRemotos);
+
 
 var nombreUsuario = [""];
-var dineroDisponible = 50000;
-var limiteExtraccion = 15000;
 var dineroADepositar;
 var dineroATransferir;
+var numDeUsr = iniciarSesion();
 
-var servicios = [
-    {
-        nombre: "Agua",
-        precio: 1500
-    },
-    {
-        nombre: "Luz",
-        precio: 1800
-    },
-    {
-        nombre: "Gas",
-        precio: 1750
-    }
-]
 
 var cuentasAmigas = [
     {
@@ -68,12 +47,12 @@ window.onload = function () {
 function cambiarLimiteDeExtraccion() {
     var limiteExtraccionFicticio = prompt("Ingrese un limite de extraccion que desee (maximo 40000$): ");
     if (limiteExtraccionFicticio <= 40000) {
-        limiteExtraccion = limiteExtraccionFicticio;
+        usuariosRemotos[numDeUsr].limiteExtraccion = limiteExtraccionFicticio;
     } else {
         alert("El monto solicitado no es permitido");
     }
     actualizarLimiteEnPantalla(limiteExtraccion);
-    return limiteExtraccion;
+    guardarDatos(usuariosRemotos[numDeUsr].limiteExtraccion);
 }
 
 function extraerDinero() {
@@ -100,9 +79,9 @@ function extraerDinero() {
 
     if (bandera) {
 
-        if ((parseInt(extraccionDeseada) <= limiteExtraccion) && (parseInt(extraccionDeseada) <= dineroDisponible)) {
-            dineroDisponible = dineroDisponible - parseInt(extraccionDeseada);
-        } else if (parseInt(extraccionDeseada) > dineroDisponible) {
+        if ((parseInt(extraccionDeseada) <= usuariosRemotos[numDeUsr].limiteExtraccion) && (parseInt(extraccionDeseada) <= usuariosRemotos[numDeUsr].dineroDisponible)) {
+            usuariosRemotos[numDeUsr].dineroDisponible = usuariosRemotos[numDeUsr].dineroDisponible - parseInt(extraccionDeseada);
+        } else if (parseInt(extraccionDeseada) > usuariosRemotos[numDeUsr].dineroDisponible) {
             alert("El monto a extraer debe ser menor al disponible.");
         } else {
             alert("El monto debe ser menor o igual al disponible para extraer.");
@@ -110,21 +89,16 @@ function extraerDinero() {
     } else {
         alert("Solo se permiten multiplos de 100.");
     }
-    actualizarSaldoEnPantalla(dineroDisponible);
-    return dineroDisponible;
+    guardarDatos(usuariosRemotos[numDeUsr].dineroDisponible);
+    actualizarSaldoEnPantalla(usuariosRemotos[numDeUsr].dineroDisponible);
 }
 
 
-function sumaDinero(dineroADepositar, dineroDisponible) {
-    parseInt(dineroDisponible) = parseInt(dineroDisponible) + parseInt(dineroADepositar);
-    return parseInt(dineroDisponible);
-}
+
 function depositarDinero() {
     dineroADepositar = prompt("Ingrese la cantidad de dinero a depositar: ");
-    //dineroDisponible = sumaDinero(parseInt(dineroADepositar), dineroDisponible);
-    dineroDisponible = parseInt(dineroDisponible) + parseInt(dineroADepositar);
-    actualizarSaldoEnPantalla(dineroDisponible);
-    return dineroDisponible;
+    usuariosRemotos[numDeUsr].dineroDisponible = usuariosRemotos[numDeUsr].dineroDisponible + parseInt(dineroADepositar);
+    actualizarSaldoEnPantalla(usuariosRemotos[numDeUsr].dineroDisponible);
 
     ///NO PUDE CONSEGUIR QUE LA SUMA SE HAGA EN OTRA FUNCION Y ANDE BIEN.
 }
@@ -142,8 +116,8 @@ function pagarServicio() {
             alert("El servicio que eligio pagar tiene un costo de 1500$");
             control = prompt("Desea pagarlo?");
             if (control == 's' || control == 'si') {
-                if (dineroDisponible > servicios[p].precio) {
-                    dineroDisponible = dineroDisponible - servicios[p].precio
+                if (usuariosRemotos[numDeUsr].dineroDisponible > serviciosRemotos[0].precio) {
+                    usuariosRemotos[numDeUsr].dineroDisponible = usuariosRemotos[numDeUsr].dineroDisponible - serviciosRemotos[0].precio
                 } else {
                     alert("No tiene dinero suficiente");
                 }
@@ -153,8 +127,8 @@ function pagarServicio() {
             alert("El servicio que eligio pagar tiene un costo de 1800$");
             control = prompt("Desea pagarlo?");
             if (control == 's' || control == 'si') {
-                if (dineroDisponible > servicios[p].precio) {
-                    dineroDisponible = dineroDisponible - servicios[p].precio
+                if (usuariosRemotos[numDeUsr].dineroDisponible > serviciosRemotos[1].precio) {
+                    usuariosRemotos[numDeUsr].dineroDisponible = usuariosRemotos[numDeUsr].dineroDisponible - serviciosRemotos[1].precio
                 } else {
                     alert("No tiene dinero suficiente");
                 }
@@ -164,8 +138,8 @@ function pagarServicio() {
             alert("El servicio que eligio pagar tiene un costo de 1750$");
             control = prompt("Desea pagarlo?");
             if (control == 's' || control == 'si') {
-                if (dineroDisponible > servicios[p].precio) {
-                    dineroDisponible = dineroDisponible - servicios[p].precio
+                if (usuariosRemotos[numDeUsr].dineroDisponible > serviciosRemotos[2].precio) {
+                    usuariosRemotos[numDeUsr].dineroDisponible = usuariosRemotos[numDeUsr].dineroDisponible - serviciosRemotos[2].precio
                 } else {
                     alert("No tiene dinero suficiente");
                 }
@@ -175,8 +149,8 @@ function pagarServicio() {
         default:
             break;
     }
-    actualizarSaldoEnPantalla(dineroDisponible);
-    return dineroDisponible;
+    guardarDatos(usuariosRemotos[numDeUsr].dineroDisponible);
+    actualizarSaldoEnPantalla(usuariosRemotos[numDeUsr].dineroDisponible);
 }
 
 
@@ -193,8 +167,8 @@ function transferirDinero() {
         var claveAmiga = prompt("Ingrese la clave de su cuenta amiga.");
         if (claveAmiga == cuentasAmigas[i].clave) {
             dineroATransferir = prompt("Ingrese la cantidad de dinero a transferir: ");
-            if (dineroATransferir <= limiteExtraccion && dineroATransferir <= dineroDisponible) {
-                dineroDisponible = dineroDisponible - dineroATransferir;
+            if (dineroATransferir <= (usuariosRemotos[numDeUsr].limiteExtraccion) && (dineroATransferir <= usuariosRemotos[numDeUsr].dineroDisponible)) {
+                usuariosRemotos[numDeUsr].dineroDisponible = usuariosRemotos[numDeUsr].dineroDisponible - dineroATransferir;
             }
         } else {
             alert("La clave de su cuenta amiga es incorrecta.");
@@ -203,43 +177,49 @@ function transferirDinero() {
     } else {
         alert("La cuenta a la que desea transferir no existe.");
     }
-    actualizarSaldoEnPantalla(dineroDisponible);
-    return dineroDisponible;
+    guardarDatos(usuariosRemotos[numDeUsr].dineroDisponible);
+    actualizarSaldoEnPantalla(usuariosRemotos[numDeUsr].dineroDisponible);
+    
 }
 
 
 function iniciarSesion() {
     nombreUsuario = prompt("Ingrese su nombre de usuario");
     var i = 0;
-    while (nombreUsuario != usuarios[i].nombre) {
+    while (nombreUsuario != usuariosRemotos[i].nombre) {
         i++;
     }
-    if (nombreUsuario == usuarios[i].nombre) {
+    if (nombreUsuario == usuariosRemotos[i].nombre) {
         var codigo = prompt("Ingrese su codigo de seguridad: ");
-        if (parseInt(codigo) == usuarios[i].codigoDeSeguridad) {
+        if (parseInt(codigo) == usuariosRemotos[i].codigoDeSeguridad) {
             alert("Ingreso concedido");
+            nombreUsuario = usuariosRemotos[i].nombre;
             cargarNombreEnPantalla(nombreUsuario);
         } else {
             alert("Ingreso denegado, la el saldo de la cuenta se pondra en 0.");
-            dineroDisponible = 0;
+            usuariosRemotos[i].dineroDisponible = 0;
         }
     }
-    actualizarSaldoEnPantalla(dineroDisponible);
-    return dineroDisponible;
+    var numDeUsr = i;
+    
+    actualizarSaldoEnPantalla(usuariosRemotos[numDeUsr].dineroDisponible);
+    guardarDatos(usuariosRemotos[numDeUsr].nombre);
+
+    return numDeUsr;
 }
 
 
 //Funciones que actualizan el valor de las variables en el HTML
 function cargarNombreEnPantalla() {
-    document.getElementById("nombre").innerHTML = "Bienvenido/a " + nombreUsuario;
+    document.getElementById("nombre").innerHTML = "Bienvenido/a " + usuariosRemotos[numDeUsr].nombre; 
 }
 
 function actualizarSaldoEnPantalla() {
-    document.getElementById("saldo-cuenta").innerHTML = "$" + dineroDisponible;
+    document.getElementById("saldo-cuenta").innerHTML = "$" + usuariosRemotos[numDeUsr].dineroDisponible;
 }
 
 function actualizarLimiteEnPantalla() {
-    document.getElementById("limite-extraccion").innerHTML = "Tu límite de extracción es: $" + limiteExtraccion;
+    document.getElementById("limite-extraccion").innerHTML = "Tu límite de extracción es: $" + usuariosRemotos[numDeUsr].limiteExtraccion;
 }
 
 
@@ -256,9 +236,25 @@ async function readJson() {
 }
 
 var usuarios
+
+function cargarDatos() {
+    // si localstorage tiene los datos de la cuenta
+    // usar esos datos
+
+    // sino
+    // leer json
+
+if ( localStorage.length > 0 ) {
+    localStorage.getItem('usuarios');
+}
+else{
+
 readJson().then(
     function (data) {
         usuarios = data;
+
+        localStorage.setItem('usuarios', JSON.stringify(usuarios));
+        
         console.log(usuarios)
     }
 ).catch(
@@ -267,8 +263,49 @@ readJson().then(
         console.log(e)
     }
 )
+}
+// fin leer json
+}
+
+cargarDatos(readJson);
 
 
+async function readJson2() {
+    try {
+        var response2 = await fetch("/data/servicios.json")
+        var data2 = await response2.json()
+        return data2
+    } catch (error) {
+        throw ("error")
+    }
+}
+
+var servicios
+
+function cargarDatos2() {
+    
+    if ( localStorage.length > 0 ) {
+        localStorage.getItem('servicios');
+    }
+    else{
+
+readJson2().then(
+    function (data2) {
+        servicios = data2;
+        
+        localStorage.setItem('servicios', JSON.stringify(servicios));
+        
+        console.log(servicios)
+    }
+).catch(
+    function (e) {
+        console.error("no se encuentra el archivo json")
+        console.log(e)
+    }
+)
+    }
+}
+cargarDatos2(readJson2);
 
 /*
 document.querySelector('#nombre').addEventListener('read', function() {
@@ -296,3 +333,21 @@ xhttp.onreadystatechange = function () {
 }
 
 */
+
+
+function guardarDatos(datos) {
+    
+   localStorage.setItem('usuarios', datos);
+
+}
+
+
+/// PASAR TODAS LAS FUNCIONES CON EL LOCAL STORAGE 
+
+// pase las funciones con el local storage, pero al no verlas, como creia que era por la posicion
+// osea que usuario era, cree numDeUsr y se lo pase a toda llamada pero tampoco funciono.
+
+/// pasar la funcion de iniciarSesion con for en vez de while.
+
+
+

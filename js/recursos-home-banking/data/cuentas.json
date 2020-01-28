@@ -1,5 +1,5 @@
 [
-    {"nombre":"Pablo","codigoDeSeguridad":1234},
-    {"nombre":"Pepe","codigoDeSeguridad":4321},
-    {"nombre":"Carlos","codigoDeSeguridad":1357}
+    {"nombre":"Pablo","codigoDeSeguridad":1234, "dineroDisponible": 60000, "limiteExtraccion": 8500},
+    {"nombre":"Pepe","codigoDeSeguridad":4321, "dineroDisponible": 50000, "limiteExtraccion": 8500},
+    {"nombre":"Carlos","codigoDeSeguridad":1357, "dineroDisponible": 25000, "limiteExtraccion": 8500}
 ]
