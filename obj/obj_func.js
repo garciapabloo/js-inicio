@@ -107,7 +107,8 @@ buscaPersona(noombreABuscar);
 
 
 function genteSkill(nombre, apellido, edad) {
-    amigos.call(this, nombre, edad, apellido);
+    amigos.call(this, "skill", nombre, edad, apellido);
+    //this.colegio=colegio;
 }
 genteSkill.prototype = Object.create(amigos.prototype);
 genteSkill.prototype.constructor = genteSkill;
@@ -116,11 +117,8 @@ genteSkill.prototype.constructor = genteSkill;
 let nico = new genteSkill("Nico", "Mitre", 21);
 
 genteSkill.prototype.saludar = function () {
-    console.log(`Hola yo soy ${this.nombre}, ${this.apellido}, y tengo ${this.edad} anios `);
+    console.log(`Hola yo soy ${this.nombre} ${this.apellido}, y tengo ${this.edad} anios `);
 }
 
 nico.saludar();
 
-
-
-//   https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Object/create
