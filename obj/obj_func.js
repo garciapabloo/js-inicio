@@ -1,5 +1,7 @@
 /// crear objeto con funcion constructora
 
+/*
+
 function persona(titulo, nombre, edad) {
     this.titulo = titulo;
     this.nombre = nombre;
@@ -103,7 +105,7 @@ function buscaPersona(noombreABuscar) {
 
 buscaPersona(noombreABuscar);
 
-*/
+
 
 
 function genteSkill(nombre, apellido, edad) {
@@ -122,3 +124,4 @@ genteSkill.prototype.saludar = function () {
 
 nico.saludar();
 
+*/
